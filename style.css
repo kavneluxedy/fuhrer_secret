@@ -1,0 +1,53 @@
+body {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    font-weight: bold;
+}
+
+#container {
+    display: flex;
+    align-content: center;
+    height: 50%;
+    background-color: seagreen;
+}
+
+#fail-container {
+    background-color: black;
+}
+
+td {
+    min-width: 50px;
+    color: #fff;
+    border: 1px solid rgb(255, 255, 255);
+    min-height: 50px;
+}
+
+tr td div {
+    /* position: relative; */
+    background-color: orangered;
+    width: 50%;
+    height: min-content;
+    text-align: center;
+}
+
+.circle {
+    background-color: cornflowerblue;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    min-height: min-content;
+    order: 5;
+}
+
+a,
+ul {
+    list-style-type: none;
+    /* color: black; */
+    text-decoration: none;
+    font-size: 20px;
+}
+
+a:hover {
+    color: #ffc800;
+}
