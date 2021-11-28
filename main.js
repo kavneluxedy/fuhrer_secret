@@ -4,7 +4,7 @@ var arrTeam = new Array(10);
 var turn;
 var isGameFinished = false;
 var currentCandidate = false;
-// @param **************************** Constructor Declaration *****************************************
+// **************************** Constructor Declaration *****************************************
 class JOUEURS { // Declaration of constructor, geter, seter
     constructor(id, htmlId, role, team) {
         (this.id = id), (this.htmlId = htmlId), (this.role = role), (this.team = team), (this.vote = null);
