@@ -1,45 +1,125 @@
 html,
 body {
-  height: 100%;
-  width: 100%;
-  /* background-color: rgba(0, 0, 0, 0.75); */
-  font-weight: bold;
+    height: 100%;
+    width: 100%;
+    /* background-color: rgba(0, 0, 0, 0.75); */
+    font-weight: bold;
 }
 
 #container {
-  display: flex;
-  align-content: space-around;
-  height: 50%;
+    display: flex;
+    align-content: space-around;
+    height: 50%;
 }
 
 a,
 ul {
-  list-style-type: none;
-  text-decoration: none;
-  font-size: 20px;
+    list-style-type: none;
+    text-decoration: none;
+    font-size: 20px;
+    text-align: right;
 }
 
 #fail-container {
-  background-color: gray;
+    background-color: gray;
 }
 
 table {
-  border: 1px solid black;
+    border: 1px solid black;
 }
 
 td {
-  min-width: 50px;
-  color: #fff;
-  border: 1px solid rgb(255, 255, 255);
+    min-width: 50px;
+    color: #fff;
+    border: 1px solid rgb(255, 255, 255);
 }
 
 a:hover {
-  color: #ffc800;
+    color: #ffc800;
 }
 
 .circle {
-  background-color: cornflowerblue;
+    background-color: cornflowerblue;
 }
+
 .no1 {
-  background-color: hotpink;
+    background-color: hotpink;
+}
+
+
+/* ! Animated Circle */
+
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    background-color: #fff;
+    height: 100%;
+    width: 100%;
+}
+
+.pion {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: #4f4;
+    height: 7px;
+    width: 7px;
+    border: 3px solid #6f6;
+    border-radius: 7px;
+    box-shadow: 0px 0px 1px 4px #9f9;
+    animation: 5s infinite pion, 5s infinite pionmove;
+    opacity: 100%;
+    z-index: 5;
+}
+
+.pionshdw {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    box-shadow: 5px 5px 10px 5px #000;
+    z-index: -2;
+}
+
+.pionshdw2 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    / box-shadow: 0px 0px 20px 5px #000;
+    */
+}
+
+@keyframes pion {
+    0% {
+        background-color: #4f4;
+        border: 3px solid #6f6;
+        box-shadow: 0px 0px 1px 4px #9f9;
+    }
+    50% {
+        background-color: #ee4;
+        border: 3px solid #ee6;
+        box-shadow: 0px 0px 1px 4px #ee9;
+    }
+    100% {
+        background-color: #f44;
+        border: 3px solid #f66;
+        box-shadow: 0px 0px 1px 4px #f99;
+    }
+}
+
+@keyframes pionmove {
+    0% {
+        transform: translateX(0px);
+    }
+    48% {
+        transform: translateX(50px);
+    }
+    52% {
+        transform: translateX(50px);
+    }
+    100% {
+        transform: translateX(100px);
+    }
 }

@@ -1,20 +1,37 @@
+// ? ATTENTION AU VERIFICATION DANS LES BOUCLES PETIT MALIN !!!
+// ! ATTENTION AU VERIFICATION DANS LES BOUCLES PETIT MALIN !!!
+// * ATTENTION AU VERIFICATION DANS LES BOUCLES PETIT MALIN !!!
+// ! ****************************************************************************************************************************************************************************
 // ! ************************** Variables Declarations ********************************************
+// ! ****************************************************************************************************************************************************************************
 var joueurs = new Array();
 var arrTeam = new Array(10);
 var turn;
 var isGameFinished = false;
 var currentCandidate = false;
-// **************************** Constructor Declaration *****************************************
-class JOUEURS { // Declaration of constructor, geter, seter
-    constructor(id, htmlId, role, team) {
-        (this.id = id), (this.htmlId = htmlId), (this.role = role), (this.team = team), (this.vote = null);
+var timer = 0; // !
+var clock;
+var clock2;
+var countYes = 0;
+// *****************************************************************************************************************************************************************************
+// **************************** Constructor Declaration ********************************************
+// *****************************************************************************************************************************************************************************
+class JOUEURS {
+    // Declaration of constructor, geter, seter
+    constructor(id, htmlId, role, team, vote) {
+        (this.id = id),
+        (this.htmlId = htmlId),
+        (this.role = role),
+        (this.team = team),
+        (this.vote = null); // ? ** Ceci est fucking normal ???
     }
     getId() {
         return this.id;
     }
-    getHtmlId() { // int
+    getHtmlId() {
+        // int
         return this.htmlId;
-    };
+    }
     getRole() {
         return this.role;
     }
@@ -39,9 +56,9 @@ class JOUEURS { // Declaration of constructor, geter, seter
     setHtmlId(htmlId) {
         this.htmlId = htmlId;
     }
-}
-// ! **********************************************************************************************
-function shuffleTeam() { // Randomize the card wrapper, the number of players is 10 (nbLiberals + nbFascists + You-Know-Who)
+} // ! ****************************************************************************************************************************************************************************
+function shuffleTeam() {
+    // Randomize the card wrapper, the number of players is 10 (nbLiberals + nbFascists + You-Know-Who)
     let nbLiberals = 6;
     let nbFascists = 3;
     for (let i = 0; i < 10; i++) {
@@ -60,30 +77,35 @@ function shuffleTeam() { // Randomize the card wrapper, the number of players is
         }
     }
     // console.log(arrTeam); // Debug
-}
-// ! **********************************************************************************************
-function electChanceler() { // start of every turn (election) 
+} // ! ****************************************************************************************************************************************************************************
+function electChanceler() {
+    // start of every turn (election)
     let eligibility = false;
-
     // 1. In DOM, display eligibility people.
     // 2. if Click on non-eligible, nothing else election=>startVote()
-
     for (let i = 0; i < 10; i++) {
-        if (joueurs[i].getRole() != "ExPresident" && joueurs[i].getRole() != "ExChanceler" && joueurs[i].getRole() != "President") {
-            document.getElementById(joueurs[i].getHtmlId()).style.backgroundColor = "yellowgreen"; // Color if isEligible
+        // is Eligible Loop
+        if (
+            joueurs[i].getRole() != "ExPresident" &&
+            joueurs[i].getRole() != "ExChanceler" &&
+            joueurs[i].getRole() != "President"
+        ) {
+            document.getElementById(joueurs[i].getHtmlId()).style.backgroundColor =
+                "yellowgreen"; // Color if isEligible
         } else {
-
-            document.getElementById(joueurs[i].getHtmlId()).style.backgroundColor = "orange"; // Color isNot
+            document.getElementById(joueurs[i].getHtmlId()).style.backgroundColor =
+                "orange"; // Color isNot
         }
     }
-
-
-    // console.log(getIdPresident()); // Debug
-}
-// ! **********************************************************************************************
-function init() { // Attribute role at each players
+} // ! ****************************************************************************************************************************************************************************
+function playersChoices(box, id) {
+    joueurs[id - 1].setVote(box.checked);
+    console.log(joueurs[id - 1].getVote()); // ! Debug
+} // ! ****************************************************************************************************************************************************************************
+function init() {
+    // Attribute role at each players
     shuffleTeam();
-    let rdm = Math.floor((Math.random() * 10)); // Around an integer between 1 and 10
+    let rdm = Math.floor(Math.random() * 10); // Around an integer between 1 and 10
     // console.log(rdm); // Debug
 
     for (let i = 0; i < 10; i++) {
@@ -94,10 +116,10 @@ function init() { // Attribute role at each players
         }
         // console.log(joueurs[i]); // Debug
     }
-    console.log(joueurs); // Debug Display Full Array Players
-}
-// ! **********************************************************************************************
-function getIdPresident() { // Return President's id
+    // console.log(joueurs); // Debug Display Full Array Players
+} // ! ****************************************************************************************************************************************************************************
+function getIdPresident() {
+    // Return President's id
     var id = 0;
     let i = 0;
     do {
@@ -106,37 +128,71 @@ function getIdPresident() { // Return President's id
     } while (joueurs[i - 1].getRole() != "President");
 
     return id;
-}
-// ! **********************************************************************************************
-function main() {
-    init();
-    // while (isGameFinished == false) {
-    //     // console.log("Finished");
+} // ! ****************************************************************************************************************************************************************************
+function color(id) {
+    // * Highlight a current candidate for Election
 
+    for (let i = 0; i < joueurs.length; i++) {
+        let colorCurrentEligible = document.getElementById(joueurs[i].getHtmlId())
+            .style.backgroundColor;
+
+        if (
+            joueurs[i].getHtmlId() == id &&
+            colorCurrentEligible == "yellowgreen" &&
+            currentCandidate == false
+        ) {
+            document.getElementById(joueurs[i].getHtmlId()).style.backgroundColor =
+                "white";
+            currentCandidate = true;
+        }
+    }
+    // console.log(id); // ! Debug
+} // ! ****************************************************************************************************************************************************************************
+function stopTimer() {
+    console.log("entrer stopTimer");
+    if (countYes >= 0) {
+        alert("Elu");
+    } else {
+        alert("Pas élu");
+    }
+    clearTimeout(clock);
+    clearTimeout(clock2);
+    console.log(countYes);
+    var inputs = document.getElementsByTagName("input");
+    for (let i = 0; i < joueurs.length; i++) {
+        inputs[i].checked = false;
+    }
+}
+
+function time() {
+    clock = setTimeout(time, 1000);
+    clock2 = setTimeout(stopTimer, 3000); // ! W.I.P !!! Clock2
+    // * Récupérer le vote de chaque joueur
+    countYes = 0;
+    for (let i = 0; i < joueurs.length; i++) {
+        if (joueurs[i].getVote() == true) {
+            // Si chaque joueur a un vote positif pour le candidat
+            // console.log(joueurs[i].getVote());
+            countYes++;
+        } else {
+            countYes--;
+        }
+    }
+    // console.log(joueurs);
+    timer++;
+    console.log("timer ::::" + timer);
+    clearTimeout(); // ! clearTimeout
+}
+// ! ****************************************************************************************************************************************************************************
+// ! ****************************************************************************************************************************************************************************
+function main() {
+    init(); // while (isGameFinished == false) {
+    electChanceler();
+    time(); // Call vote's timer
+
+    //     // console.log("Finished");
 
     //     isGameFinished = true;
     // }
-
-    electChanceler();
-
 }
-// ! **********************************************************************************************
-function color(id) {
-
-    for (let i = 0; i < joueurs.length; i++) {
-
-        let colorCurrentEligible = document.getElementById(joueurs[i].getHtmlId()).style.backgroundColor;
-
-        if (joueurs[i].getHtmlId() == id && colorCurrentEligible == "blue" && currentCandidate == false) {
-
-            document.getElementById(joueurs[i].getHtmlId()).style.backgroundColor = "yellow";
-
-
-            console.log(currentCandidate);
-            currentCandidate = true;
-            console.log(currentCandidate);
-        }
-    }
-    console.log(id);
-}
-// ! **********************************************************************************************
+// ! ****************************************************************************************************************************************************************************
