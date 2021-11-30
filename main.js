@@ -9,7 +9,6 @@ var arrTeam = new Array(10);
 var turn;
 var isGameFinished = false;
 var currentCandidate = false;
-var timer = 0; // !
 var clock;
 var clock2;
 var countYes = 0;
@@ -156,7 +155,6 @@ function stopTimer() {
         alert("Pas élu");
     }
     clearTimeout(clock);
-    clearTimeout(clock2);
     console.log(countYes);
     var inputs = document.getElementsByTagName("input");
     for (let i = 0; i < joueurs.length; i++) {
@@ -178,10 +176,6 @@ function time() {
             countYes--;
         }
     }
-    // console.log(joueurs);
-    timer++;
-    console.log("timer ::::" + timer);
-    clearTimeout(); // ! clearTimeout
 }
 // ! ****************************************************************************************************************************************************************************
 // ! ****************************************************************************************************************************************************************************
